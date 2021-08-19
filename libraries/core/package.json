@@ -1,0 +1,29 @@
+{
+  "name": "@codebit-labs/monorepo-core",
+  "version": "0.0.2",
+  "main": "dist/main.js",
+  "typings": "dist/core.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.11"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "restricted"
+  },
+  "peerDependencies": {
+    "inversify-binding-decorators": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:codebit-labs/monorepo-serverless.git",
+    "directory": "packages/sdk"
+  }
+}
