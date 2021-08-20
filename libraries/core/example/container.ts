@@ -1,8 +1,8 @@
 import { Container } from "inversify";
 
-import { MonoRepoCore } from "./../core";
+import { fireOperationCore } from "./../core";
 
 const container = new Container();
-container.load(MonoRepoCore.container);
+container.load(fireOperationCore.container);
 
 export { container };

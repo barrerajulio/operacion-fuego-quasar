@@ -1,7 +1,7 @@
 import {
-  MonoRepoCore,
+  fireOperationCore,
   StringHelper as MrStringHelper,
-} from "@codebit-labs/monorepo-core";
+} from "@codebit-labs/operacion-fuego-core";
 import { provide } from "inversify-binding-decorators";
 // import { provide } from "inversify-binding-decorators";
 
@@ -14,7 +14,7 @@ import { provide } from "inversify-binding-decorators";
  * @class StringHelper
  * @extends {MrStringHelper}
  */
-@provide(MonoRepoCore.symbols.StringHelper)
+@provide(fireOperationCore.symbols.StringHelper)
 export class StringHelper extends MrStringHelper {
   public toInt(subject: string): number {
     console.log("Now overwrite with provider decorator");

@@ -11,10 +11,11 @@
 #
 # Happy Coding!
 
-service: codebit-labs-monorepo-world
+service: codebit-labs-operacion-fuego-api
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
-#org: your-org-name
+org: barreraandradejulio
+app: operacion-fuego-api
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -24,9 +25,9 @@ provider:
   name: aws
   runtime: nodejs12.x
   tags:
-    labs: true
+    labs: "true"
   deploymentBucket:
-    name: yaydoo-labs-monorepo-serverless
+    name: codebit-labs-operacion-fuego-api-serverless
   stage: ${opt:stage, 'development'}
 
 custom:
@@ -34,15 +35,21 @@ custom:
     - common:
       packageManager: yarn
       dependenciesPath: ./../package.json
-    - world:
+    - hello:
       functions:
-        - world
+        - hello
       packageManager: yarn
       dependenciesPath: ./package.json
+  webpack:
+    packages: yarn
+    includeModules:
+      forceExclude:
+        - aws-sdk
 
 plugins:
   - serverless-layers
   - serverless-webpack
+  - serverless-offline
 
 # you can overwrite defaults here
 #  stage: dev
@@ -69,24 +76,24 @@ plugins:
 #    variable1: value1
 
 # you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+package:
+  individually: true
 
 functions:
-  world:
-    handler: handler.world
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
-#    events:
-#      - http:
-#          path: users/create
-#          method: get
+  hello:
+    handler: handler.hello
+    #    The following are a few example events you can configure
+    #    NOTE: Please make sure to change your handler code to work with those events
+    #    Check the event documentation for details
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)

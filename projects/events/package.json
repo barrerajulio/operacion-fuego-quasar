@@ -1,12 +1,11 @@
 {
-  "name": "@codebit-labs/monorepo-world",
+  "name": "@codebit-labs/operacion-fuego-events",
   "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "sls:package": "sls package --stage development",
-    "sls:deploy": "sls deploy --stage development",
-    "sls:deploy:world": "sls deploy function --function world --stage development"
+    "package": "sls package --stage development",
+    "deploy": "sls deploy --stage development"
   },
   "devDependencies": {
     "serverless": "^2.12.0",
@@ -15,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@codebit-labs/monorepo-core": "^0.0.2",
+    "@codebit-labs/operacion-fuego-core": "^0.0.2",
     "express": "^4.17.1",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",

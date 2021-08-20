@@ -1,6 +1,5 @@
-import bodyParser from "body-parser";
 import cors from "cors";
-import express, { Request, Response } from "express";
+import express from "express";
 import serverless from "serverless-http";
 
 import { router } from "./router";
@@ -10,11 +9,11 @@ export const hello = async (
   context: AWSLambda.Context
 ) => {
   const app: any = express();
-  app.use(bodyParser.text());
-  app.use(bodyParser.urlencoded());
-  app.use(bodyParser.raw());
-  app.use(bodyParser.json());
-  app.use("/v1/api", cors(), router);
+  app.use(express.text());
+  app.use(express.urlencoded());
+  app.use(express.json());
+  app.use(express.raw());
+  app.use("/v1", cors(), router);
 
   const serverlessApp = serverless(app);
   return serverlessApp(event, context);

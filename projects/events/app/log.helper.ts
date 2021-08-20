@@ -1,10 +1,10 @@
 import {
   LogHelper as MrLogHelper,
-  MonoRepoCore,
-} from "@codebit-labs/monorepo-core";
+  fireOperationCore,
+} from "@codebit-labs/operacion-fuego-core";
 import { provide } from "inversify-binding-decorators";
 
-@provide(MonoRepoCore.symbols.LogHelper)
+@provide(fireOperationCore.symbols.LogHelper)
 export class LogHelper extends MrLogHelper {
   public log(subject: string): void {
     console.log("Overwrite mr log helper");

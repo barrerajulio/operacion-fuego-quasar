@@ -1,5 +1,5 @@
 {
-  "name": "@codebit-labs/monorepo-core",
+  "name": "@codebit-labs/operacion-fuego-core",
   "version": "0.0.2",
   "main": "dist/main.js",
   "typings": "dist/core.d.ts",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:codebit-labs/monorepo-serverless.git",
-    "directory": "packages/sdk"
+    "url": "ssh://git@github.com:barrerajulio/operacion-fuego-quasar.git",
+    "directory": "libraries/core"
   }
 }

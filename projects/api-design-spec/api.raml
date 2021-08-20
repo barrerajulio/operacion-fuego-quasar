@@ -1,0 +1,421 @@
+#%RAML 1.0
+---
+title: operacion-fuego-quasar/api
+version: 1.0.0
+baseUri: http://localhost:3000
+mediaType: application/json
+
+traits: 
+  cross-origin:  
+    headers:
+      Access-Control-Allow-Origin:
+        example: |
+          *
+
+securitySchemes: 
+  oauth_2_0:
+    description: secured by oauth 2.0
+    type: OAuth 2.0
+    describedBy: 
+      headers:
+        Authorization:
+          description: It must contain the auth token
+          type: string
+        401:
+          description: Bad OAuth request
+    settings:
+      authorizationUri: http://localhost:3000/oauth/authorize
+      accessTokenUri: http://localhost:3000/oauth/token
+      authorizationGrants: [ authorization_code, implicit ]
+
+types:
+  PositionLatLng:
+    type: object
+    properties:
+      x:
+        type: string
+        required: true
+      y:
+        type: string
+        required: true
+  Satellite:
+    type: object
+    properties: 
+      name:
+        type: string
+        required: false
+      distance:
+        type: number
+        required: true
+      message:
+        type: string[]
+        required: true
+  ValidationItem:
+    type: object
+    properties: 
+      type:
+        required: true
+        type: string
+      message:
+        required: true
+        type: string
+  ValidationResult:
+    type: object
+    properties: 
+      name:
+        type: string
+        required: true
+      validations:
+        type: ValidationItem[]
+        required: true
+  BaseError:
+    type: object
+    properties: 
+      error:
+        type: object
+        required: true
+        properties:
+          code:
+            type: number
+            required: true
+          message:
+            type: string
+            required: true
+          type:
+            type: string
+            required: true
+  BadRequestError:
+    type: BaseError
+    properties:
+      fields:
+        type: ValidationResult[]
+        required: false
+  OAuthRequest:
+    type: object
+    properties:
+      client_id:
+        type: string
+        required: true
+        minLength: 16
+        maxLength: 16
+      response_type:
+        type: string
+        enum: [ code, token ]
+        required: true
+      redirect_uri:
+        type: string
+        # pattern: ^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$
+        required: true
+      scope:
+        type: string
+        required: true
+        # pattern: ^[[A-Za-z] ?]+$
+/:
+  get:
+    description: Base ping endpoint
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "ping": "pong"
+              }
+/hello:
+  get:
+    description: hello world
+    securedBy: [oauth_2_0]
+    responses: 
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "hello": "username"
+              }
+/auth:
+  /signin:
+    post:
+      is: [ cross-origin ]
+      description: |
+        Identify an account, its a pre-action for execute differents auth requests with purpose to
+        have a user context
+      body:
+        application/json:
+          properties:
+            username:
+              description: |
+                username or email for identify an account, this'll unique and irrepeteable
+              type: string
+              required: true
+              minLength: 5
+              maxLength: 100
+            password:
+              description: password for retrieve a valid session
+              required: true
+              minLength: 8
+              type: string
+          example: |
+            {
+              "username": "user@domain.com",
+              "password": "password"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                access_token:
+                  required: true
+                  type: string
+                refresh_token:
+                  required: true
+                  type: string
+              example: |
+                {
+                  "access_token": "eyJhbGciOiJ...sw5c",
+                  "refresh_token": "eyJhbGciO...QdkawQwSCSsS_Feks"
+                }
+        403:
+          body:
+            application/json:
+              type: BaseError
+              example: |
+                {
+                  "error": {
+                    "code": 1001,
+                    "message": "username or password was invalid",
+                    "type": "NotAuthorizedException"
+                  }
+                }
+        400:
+          body:
+            application/json:
+              type: BadRequestError
+              example: |
+                {
+                  "error": {
+                    "code": 4000,
+                    "message": "There are fields were invalid. Review and try again",
+                    "type": "BadRequestException",
+                    "fields": [
+                      {
+                        "name": "password",
+                        "validations": [
+                          {
+                            "type": "any.required",
+                            "message": "\"password\" is required"
+                          },
+                          {
+                            "type": "any.required",
+                            "message": "\"username\" is required"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+  /signout:
+    post:
+      description: |
+        Logout the current session to avoid something try of action with it
+      responses:
+        204:
+          description: When the operations can be completed successful
+        401:
+          description: When the session was not valid
+          body:
+            application/json:
+              type: BaseError
+              example: |
+                {
+                  "error": {
+                    "code": 4011,
+                    "message": "The current session was invalid",
+                    "type": "UnauthorizedException"
+                  }
+                }
+        400:
+          description: The token was not sended
+          body:
+            application/json:
+              type: BadRequestError
+              example: |
+                {
+                  "error": {
+                    "code": 4001,
+                    "message": "The token is required",
+                    "type": "BadRequestException"
+                  }
+                }
+
+  /signup:
+    post:
+      description: |
+        Allow register a new account
+/oauth:
+  /verify:
+    description: |
+      - validate client configuration for check if the client was already auth with the same
+      scopes
+      - validate cliente configuration for verify the auth of app requester
+    post:
+      body:
+        application/json:
+          type: OAuthRequest
+      responses:
+        302:
+          headers:
+            Location:
+              example: https://localhost:3000
+          description: |
+            redirect when is previously approved
+        204:
+          description: |
+            the configuration requested it's ok and we can proceed with other things
+  /authorize:
+    description: |
+      get the authorization to access the protected resource
+    post:
+      body:
+        application/json:
+          type: OAuthRequest
+          properties:
+            state:
+              required: false
+              type: string
+      responses:
+        302:
+          description: redirect when is completed the desition for approve or unapprove the auth
+  /token:
+    description: |
+      - interchange an authorization code
+      - refresh token
+    post:
+      headers:
+        Authorization:
+          type: string
+          description: |
+            Base 64 encoded string that contains the client ID and client secret key.
+            The field must have the format: Authorization: Basic *<base64 encoded client_id:client_secret>*
+      body:
+        application/json:
+          properties:
+            grant_type:
+              type: string
+              enum: [ authorization_code ]
+              required: true
+            code:
+              type: string
+            redirect_uri:
+              description: |
+                this is param will be match with passed when requesting the authorization code
+              type: string
+              required: true
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                access_token:
+                  type: string
+                  required: true
+                token_type:
+                  type: string
+                  description: How the access token may be used always "Bearer"
+                  required: true
+                scope:
+                  type: string
+                  description: |
+                    A space-separated list of scopes which have been granted for this access_token.
+                    Only returns when the scopes was changed
+                  required: false
+                expires_in:
+                  type: number
+                  required: true
+                  description: The time period (in seconds) for which the access token is valid
+              example: |
+                {
+                  "access_token": "NgCXRK...MzYjw",
+                  "token_type": "Bearer",
+                  "scope": "user-read-private user-read-email",
+                  "expires_in": 3600,
+                  "refresh_token": "NgAagA...Um_SHo"
+                }
+/topsecret:
+  description: |
+    Permite obtener la información de la nave
+  post:
+    body:
+      application/json:
+        properties:
+          satellites:
+            type: Satellite[]
+            required: true
+        example: |
+          {
+            "satellites": [
+              {
+                "name": "kenobi",
+                "distance": 100.0,
+                "message": ["este", "", "", "mensaje", ""]
+              },
+              {
+                "name": "skywalker",
+                "distance": 115.5,
+                "message": ["", "es", "", "", "secreto"]
+              },
+              {
+                "name": "sato",
+                "distance": 142.7,
+                "message": ["este", "", "un", "", ""]
+              }
+            ]
+          }
+    responses: 
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "position": {
+                  "x": -100.0,
+                  "y": 75.5
+                },
+                "message": "este es un mensaje secreto"
+              }
+/topsecret_split:
+  /{satellite_name}:
+    post:
+      body:
+        application/json:
+          type: Satellite
+          example: |
+            {
+              "distance": 100.0,
+              "message": ["este", "", "", "mensaje", ""]
+            }
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              properties:
+                position:
+                  type: PositionLatLng
+                message:
+                  type: string
+                status_code:
+                  type: string
+                  enum: [ "2000", "5000" ]
+                  required: true
+              example: |
+                {
+                  "position": {
+                    "x": "-100.0",
+                    "y": "75.5"
+                  },
+                  "message": "este es un mensaje secreto",
+                  "status_code": "2000"
+                }

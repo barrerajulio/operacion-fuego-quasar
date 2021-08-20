@@ -3,11 +3,11 @@ import { ContainerModule } from "inversify";
 import { ObjectHelper } from "../helpers/object.helper";
 import { Symbols } from "./symbols";
 
-const monoRepoCoreContainer = new ContainerModule((bind) => {
+const container = new ContainerModule((bind) => {
   bind(Symbols.ObjectHelper).to(ObjectHelper);
 });
 
-export const MonoRepoCore = {
-  container: monoRepoCoreContainer,
+export const fireOperationCore = {
+  container,
   symbols: Symbols,
 };

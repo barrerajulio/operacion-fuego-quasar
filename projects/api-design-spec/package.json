@@ -1,0 +1,15 @@
+{
+  "name": "@codebit-labs/operacion-fuego-design-spec",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Julio Barrera A.",
+  "license": "MIT",
+  "scripts": {
+    "start": "raml mock api.raml",
+    "start:spec": "osprey -f  api.raml -p 4000 -a localhost:3000",
+    "validate": "raml validate api.raml"
+  },
+  "devDependencies": {
+    "osprey": "^1.0.0"
+  }
+}

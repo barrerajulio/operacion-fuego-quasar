@@ -4,7 +4,7 @@ import {
   DateHelper,
   LogHelper,
   StringHelper,
-} from "@codebit-labs/monorepo-core";
+} from "@codebit-labs/operacion-fuego-core";
 
 import { BaseUtils } from "./utils/base.utils";
 import { container } from "./container";

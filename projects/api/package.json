@@ -1,14 +1,13 @@
 {
-  "name": "@codebit-labs/monorepo-hello",
+  "name": "@codebit-labs/operacion-fuego-api",
   "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "private": "true",
   "scripts": {
-    "sls:package": "sls package --stage development",
-    "sls:deploy": "sls deploy --stage development",
-    "sls:deploy:hello": "sls deploy function --function hello --stage development",
-    "sls:start": "sls offline start"
+    "package": "sls package --stage development",
+    "deploy": "sls deploy --stage development",
+    "start": "sls offline start"
   },
   "devDependencies": {
     "@types/cors": "^2.8.8",

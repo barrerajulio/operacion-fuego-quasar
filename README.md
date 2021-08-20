@@ -1,80 +1,98 @@
-# Serverless package
+# Operación Fuego de Quasar
 
-## General
+Han Solo ha sido recientemente nombrado General de la Alianza Rebelde y busca dar un gran golpe contra el Imperio Galáctico para reavivar la llama de la resistencia.
 
-Global Requirements:
+El servicio de inteligencia rebelde ha detectado un llamado de auxilio de una nave portacarga imperial a la deriva en un campo de asteroides. El manifiesto de la nave es ultra clasificado, pero se rumorea que transporta raciones y armamento para una legión entera.
 
-- commitlint [https://commitlint.js.org/#/guides-local-setup](https://commitlint.js.org/#/guides-local-setup)
-- lerna [https://github.com/lerna/lerna](https://github.com/lerna/lerna)
-- serverless [https://www.serverless.com/](https://www.serverless.com/)
+## Desafío
 
-## Structure
+Como jefe de comunicaciones rebelde, tu misión es crear un programa en Golang que retorne la fuente y contenido del mensaje de auxilio. Para esto, cuentas con tres satélites que te permitirán triangular la posición, ¡pero cuidado! el mensaje puede no llegar completo a cada satélite debido al campo de asteroides frente a la nave.
 
-### Hello package
+**Posición de los satélites actualmente en servicio**
 
-#### Layers:
+- Kenobi: [-500, -200]
+- Skywalker: [100, -100]
+- Sato: [500, 100]
 
-- packagemngr layer
-- hello layer
+### Nivel 1
 
-#### Libraries:
+Crear un programa con las siguientes firmas:
 
-- sequelize
-
-### World package
-
-#### Layers:
-
-- packagemngr layer
-- world layer
-
-#### Libraries
-
-- joi
-- express
-
-## Lerna commands
-
-```bash
-lerna add serverless-layers --dev --scope=@codebit-labs/monorepo-{hello,world}
+```js
+// input: distancia al emisor tal cual se recibe en cada satélite
+// output: las coordenadas ‘x’ e ‘y’ del emisor del mensaje
+func GetLocation(distances ...float32) (x, y float32)
+// input: el mensaje tal cual es recibido en cada satélite
+// output: el mensaje tal cual lo genera el emisor del mensaje
+func GetMessage(messages ...[]string) (msg string)
 ```
 
-## Scripts
+Consideraciones:
 
-### Package the project
+- La unidad de distancia en los parámetros de GetLocation es la misma que la que se utiliza para indicar la posición de cada satélite.
+- El mensaje recibido en cada satélite se recibe en forma de arreglo de strings.
+- Cuando una palabra del mensaje no pueda ser determinada, se reemplaza por un string en blanco en el array. Ejemplo: ["este", "es", "", "mensaje"]
+- Considerar que existe un desfasaje (a determinar) en el mensaje que se recibe en cada satélite.
+- Ejemplo:
+  + Kenobi: ["", "este", "es", "un", "mensaje"]
+  + Skywalker: ["este", "", "un", "mensaje"]
+  + Sato: ["", ", "es", ", "mensaje"]
 
-```bash
-lerna run sls:package --scope=@codebit-labs/monorepo-{package} --stream
+### Nivel 2
+
+Crear una API REST, hostear esa API en un cloud computing libre (Google App Engine, Amazon AWS, etc), crear el servicio /topsecret/ en donde se pueda obtener la ubicación de la nave y el mensaje que emite.
+
+El servicio recibirá la información de la nave a través de un HTTP POST con un payload con el siguiente formato:
+
+```json
+POST → /topsecret/
+{
+    "satellites": [
+        {
+            "name": "kenobi",
+            "distance": 100.0,
+            "message": ["este", "", "", "mensaje", ""]
+        },
+        {
+            "name": "skywalker",
+            "distance": 115.5
+            "message": ["", "es", "", "", "secreto"]
+        },
+        {
+            "name": "sato",
+            "distance": 142.7
+            "message": ["este", "", "un", "", ""]
+        }
+    ]
+}
 ```
 
-### Deploy the project
-
-```bash
-lerna run sls:deploy --scope=@codebit-labs/monorepo-{package} --stream
+La respuesta, por otro lado, deberá tener la siguiente forma:
+```json
+RESPONSE CODE: 200
+{
+"position": {
+"x": -100.0,
+"y": 75.5
+},
+"message": "este es un mensaje secreto"
+}
 ```
 
-**Note** The `--stream` is usefully for show the log process
+En caso que no se pueda determinar la posición o el mensaje, retorna:
 
-## Bugs
+RESPONSE CODE: 404
 
-If you try install multiples packages with lerna there is a bug and isn't recognized the packages
+### Nivel 3
 
-## Tips
+Considerar que el mensaje ahora debe poder recibirse en diferentes POST al nuevo servicio /topsecret_split/, respetando la misma firma que antes. Por ejemplo:
 
-Install two dependencies in shortcut mode
-
-### Note 1
-
-I was tested rebind option with @provider decorator from \*inversify-binding-decorators\* I would have wished overwrite injection reference with only put it the provider decorator in the replacement class but this is test wasn't success.
-
-#### Update
-
-If I import the file of this manner `import 'path'` the container find the injector and build local providers but is unable to rebind references of injectors
-
-### Note 2
-
-Very importantly understand that the order in that load the container modules affect the way of the behaviour of the imported classes
-
-```bash
-[yarn add|npm install] @commitlint/{cli,config-conventional}
+```json
+POST → /topsecret_split/{satellite_name}
+{
+"distance": 100.0,
+"message": ["este", "", "", "mensaje", ""]
+}
 ```
+
+Crear un nuevo servicio /topsecret_split/ que acepte POST y GET. En el GET la respuesta deberá indicar la posición y el mensaje en caso que sea posible determinarlo y tener la misma estructura del ejemplo del Nivel 2. Caso contrario, deberá responder un mensaje de error indicando que no hay suficiente información.

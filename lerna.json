@@ -1,10 +1,7 @@
 {
   "individually": true,
   "npmClient": "yarn",
-  "packages": [
-    "packages/*",
-    "libraries/*"
-  ],
+  "packages": ["projects/*", "libraries/*"],
   "version": "0.0.2",
   "useWorkspaces": true,
   "command": {
@@ -12,12 +9,7 @@
       "registry": "https://npm.pkg.github.com"
     },
     "version": {
-      "allowBranch": [
-        "master",
-        "alpha",
-        "beta",
-        "development"
-      ],
+      "allowBranch": ["master"],
       "message": "chore(release): publish %s"
     }
   }

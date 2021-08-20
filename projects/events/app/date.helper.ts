@@ -1,4 +1,4 @@
-import { DateHelper as MrDateHelper } from "@codebit-labs/monorepo-core";
+import { DateHelper as MrDateHelper } from "@codebit-labs/operacion-fuego-core";
 import { injectable } from "inversify";
 
 @injectable()

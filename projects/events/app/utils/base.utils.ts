@@ -1,19 +1,22 @@
 import { inject, injectable } from "inversify";
-import { MonoRepoCore, ObjectHelper } from "@codebit-labs/monorepo-core";
+import {
+  fireOperationCore,
+  ObjectHelper,
+} from "@codebit-labs/operacion-fuego-core";
 
-import { container } from "./../container";
+import { container } from "../container";
 import { Repository } from "../repository";
 import { Symbols } from "../symbols";
 
 @injectable()
 export class BaseUtils {
-  @inject(MonoRepoCore.symbols.ObjectHelper)
+  @inject(fireOperationCore.symbols.ObjectHelper)
   private objectHelper!: ObjectHelper;
 
   public hello(): string {
     const repository = container.get<Repository>(Symbols.Repository);
     const objectHelper = container.get<ObjectHelper>(
-      MonoRepoCore.symbols.ObjectHelper
+      fireOperationCore.symbols.ObjectHelper
     );
     console.log(objectHelper.toString(100));
     console.log(repository.getOne(1));
