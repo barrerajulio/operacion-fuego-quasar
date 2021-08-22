@@ -1,7 +1,9 @@
+import "reflect-metadata";
 import cors from "cors";
 import express from "express";
 import serverless from "serverless-http";
 
+import "@app/app/container";
 import { router } from "./router";
 
 export const hello = async (

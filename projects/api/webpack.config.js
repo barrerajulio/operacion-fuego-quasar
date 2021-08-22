@@ -1,4 +1,5 @@
 const nodeExternals = require("webpack-node-externals");
+const path = require('path');
 const slsw = require("serverless-webpack");
 
 module.exports = {
@@ -15,6 +16,10 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      "@app": path.resolve(__dirname, "src/"),
+      "@modules": path.resolve(__dirname, "src/modules/")
+    },
     extensions: [".ts", ".js"],
   },
 };

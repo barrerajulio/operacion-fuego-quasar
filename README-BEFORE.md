@@ -8,6 +8,14 @@ Global Requirements:
 - lerna [https://github.com/lerna/lerna](https://github.com/lerna/lerna)
 - serverless [https://www.serverless.com/](https://www.serverless.com/)
 
+## How to install
+
+```bash
+npm -g i lerna-cli
+lerna bootstrap
+lerna run build
+```
+
 ## Structure
 
 ### Hello package
