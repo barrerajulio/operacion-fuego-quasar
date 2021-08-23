@@ -8,7 +8,7 @@ import {
 
 @injectable()
 export class NotFoundHandler implements IExceptionHandler {
-  public make(res: Response, _options: IExceptionOptionsMake): Response {
+  public make(res: Response, _options: IExceptionOptionsMake): Response | void {
     res.status(404);
     return res.end();
   }

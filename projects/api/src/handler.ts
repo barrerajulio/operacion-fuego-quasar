@@ -16,7 +16,13 @@ export const hello = async (
   app.use(express.urlencoded());
   app.use(express.json());
   app.use(express.raw());
-  app.use("/v1", cors(), router);
+  app.use(
+    "/v1",
+    cors({
+      origin: "*",
+    }),
+    router
+  );
   app.use(function (_: Request, res: Response, next: NextFunction) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST");
