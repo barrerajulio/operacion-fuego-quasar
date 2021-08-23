@@ -19,7 +19,7 @@ export const hello = async (
   app.use(
     "/v1",
     cors({
-      origin: "*",
+      origin: "https://blog.juliobarrera.dev",
     }),
     router
   );
