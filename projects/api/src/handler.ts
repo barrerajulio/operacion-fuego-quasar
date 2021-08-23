@@ -24,7 +24,6 @@ export const hello = async (
     router
   );
   app.use(function (_: Request, res: Response, next: NextFunction) {
-    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST");
     res.header(
       "Access-Control-Allow-Headers",
