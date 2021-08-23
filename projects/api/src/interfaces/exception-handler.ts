@@ -5,5 +5,5 @@ export type IExceptionOptionsMake = {
 };
 
 export interface IExceptionHandler {
-  make(res: Response, options: IExceptionOptionsMake): Response;
+  make(res: Response, options: IExceptionOptionsMake): Response | void;
 }
