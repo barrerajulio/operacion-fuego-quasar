@@ -1,3 +1,4 @@
+import { HttpStatus } from "../enums";
 import { ObjectHelper } from "../helpers/object.helper";
 import { ObjectOrString } from "../types";
 import { StringHelper } from "../helpers/string.helper";
@@ -7,13 +8,17 @@ export class HttpException extends Error {
 
   public constructor(
     private readonly response: ObjectOrString,
-    private readonly status: number
+    private readonly status: HttpStatus
   ) {
     super();
     // fix issue https://github.com/microsoft/TypeScript/issues/15606
     Object.setPrototypeOf(this, new.target.prototype);
     this.init();
     this.configureMessage();
+  }
+
+  public getStatus(): HttpStatus {
+    return this.status;
   }
 
   private init(): void {
