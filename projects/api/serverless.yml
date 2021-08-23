@@ -11,11 +11,7 @@
 #
 # Happy Coding!
 
-service: codebit-labs-operacion-fuego-api
-# app and org for use with dashboard.serverless.com
-#app: your-app-name
-org: barreraandradejulio
-app: operacion-fuego-api
+service: codebit-labs-fo-api
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -27,8 +23,8 @@ provider:
   tags:
     labs: "true"
   deploymentBucket:
-    name: codebit-labs-operacion-fuego-api-serverless
-  stage: ${opt:stage, 'development'}
+    name: codebit-labs-fo-api-serverless
+  stage: ${opt:stage, 'dev'}
 
 custom:
   serverless-layers:
@@ -81,7 +77,7 @@ package:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/handler.hello
     #    The following are a few example events you can configure
     #    NOTE: Please make sure to change your handler code to work with those events
     #    Check the event documentation for details
