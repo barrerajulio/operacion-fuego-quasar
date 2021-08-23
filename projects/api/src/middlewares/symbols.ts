@@ -3,6 +3,7 @@ const Symbols = {
   ExceptionHandlerStrategy: Symbol.for("ExceptionHandlerStrategy"),
   ExceptionFactory: Symbol.for("ExceptionFactory"),
   ExceptionHandler: Symbol.for("ExceptionHandler"),
+  NotFoundHandler: Symbol.for("NotFoundHandler"),
 };
 
 export default Symbols;

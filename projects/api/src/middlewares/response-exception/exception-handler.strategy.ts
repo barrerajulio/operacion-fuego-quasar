@@ -10,6 +10,10 @@ export class ExceptionHandlerStrategy {
   private exceptionFactory!: (statusCode: HttpStatus) => IExceptionHandler;
 
   public resolve(error: HttpException): IExceptionHandler {
-    return this.exceptionFactory(error.getStatus());
+    let statusCode: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    if (error instanceof HttpException) {
+      statusCode = error.getStatus();
+    }
+    return this.exceptionFactory(statusCode);
   }
 }

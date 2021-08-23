@@ -13,6 +13,6 @@ router.get("*", (_req, res): Response => {
   return res.json({ error: 404 });
 });
 
-router.use("/top-secret", topSecretRouter);
+router.use("/top_secret", topSecretRouter);
 
 export { router };

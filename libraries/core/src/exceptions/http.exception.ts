@@ -34,7 +34,7 @@ export class HttpException extends Error {
   }
 
   public static createBody(
-    objectOrError: object | string,
+    objectOrError?: object | string,
     description?: string,
     statusCode?: number
   ) {
