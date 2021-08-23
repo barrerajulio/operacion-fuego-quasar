@@ -1,5 +1,7 @@
 import { Schema } from "joi";
 
+import { BadRequestException } from "../exceptions/bad-request.exception";
+
 function schemaValidate(schema: Schema) {
   return function (
     _: Record<string, any>,
@@ -9,8 +11,8 @@ function schemaValidate(schema: Schema) {
     const method = descriptor.value;
     descriptor.value = function (req: Request) {
       const { error: hasError } = schema.validate(req.body);
-      if (hasError) {
-        throw new Error("Bad request");
+      if (!!hasError) {
+        throw new BadRequestException(hasError);
       }
       /* eslint-disable-next-line prefer-rest-params */
       return method!.apply(this, arguments);

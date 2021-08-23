@@ -1,12 +1,13 @@
+import "reflect-metadata";
 import faker from "faker";
-import { schemaMockFn, validateMockFn } from "./__mocks__/schema.mock";
 
+import schemaValidate from "./schema-validate.decorator";
 import {
   descriptorMock,
   descriptorValueSetMockFn,
   methodApplyMockFn,
 } from "./__mocks__/descriptor.mock";
-import schemaValidate from "./schema-validate.decorator";
+import { schemaMockFn, validateMockFn } from "./__mocks__/schema.mock";
 
 describe("core.decorators.schemaValidate", () => {
   it("should be returns a function", () => {
@@ -26,9 +27,7 @@ describe("core.decorators.schemaValidate", () => {
       error: {},
     });
     schemaValidate(schemaMockFn)(null as any, null as any, descriptorFake);
-    await expect(() => descriptorFake.value({})).rejects.toThrowError(
-      "Bad request"
-    );
+    expect(() => descriptorFake.value({})).toThrow();
     expect(methodApplyMockFn).toHaveBeenCalledTimes(0);
     validateMockFn.mockRestore();
   });
