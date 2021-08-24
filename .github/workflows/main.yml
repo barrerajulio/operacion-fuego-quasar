@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Authenticate with GitHub package registry
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "@codebit-labs:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken={$NPM_TOKEN}" > ~/.npmrc
           cat ~/.npmrc
       - name: Install and build
         run: |

@@ -8,6 +8,7 @@ provider:
   tags:
     labs: "true"
     project: codebit-labs
+  lambdaHashingVersion: 20201221
   deploymentBucket:
     name: codebit-labs-fo-api-serverless
   stage: ${opt:stage, 'dev'}
