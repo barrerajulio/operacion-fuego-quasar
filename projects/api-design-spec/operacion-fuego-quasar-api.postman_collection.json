@@ -702,19 +702,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/topsecret_split/:satellite_name",
+							"raw": "{{baseUrl}}/top_secret_split/kenobi",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"topsecret_split",
-								":satellite_name"
-							],
-							"variable": [
-								{
-									"key": "satellite_name",
-									"value": "<string>"
-								}
+								"top_secret_split",
+								"kenobi"
 							]
 						}
 					},
@@ -726,19 +720,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/topsecret_split/:satellite_name",
+							"raw": "{{baseUrl}}/top_secret_split",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"topsecret_split",
-								":satellite_name"
-							],
-							"variable": [
-								{
-									"key": "satellite_name",
-									"value": "<string>"
-								}
+								"top_secret_split"
 							]
 						}
 					},
