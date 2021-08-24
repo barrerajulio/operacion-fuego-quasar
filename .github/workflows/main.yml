@@ -25,10 +25,10 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Authenticate with GitHub package registry
-        #run: |
-        #  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-        #  cat ~/.npmrc
+      # - name: Authenticate with GitHub package registry
+      #   run: |
+      #     echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+      #     cat ~/.npmrc
       - name: Install and build
         run: |
           npm install -g yarn lerna-cli serverless
