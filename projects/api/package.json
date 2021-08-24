@@ -1,12 +1,12 @@
 {
   "name": "@codebit-labs/operacion-fuego-api",
-  "version": "0.0.2",
+  "version": "0.1.9",
   "main": "index.js",
   "license": "MIT",
   "private": "true",
   "scripts": {
-    "package": "sls package --stage development",
-    "deploy": "sls deploy --stage development",
+    "package": "sls package --stage dev",
+    "deploy": "sls deploy --stage dev",
     "start": "sls offline start",
     "test": "jest"
   },
@@ -22,6 +22,7 @@
     "typescript": "^4.1.2"
   },
   "dependencies": {
+    "@codebit-labs/operacion-fuego-core": "^0.1.9",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "inversify": "^5.1.1",

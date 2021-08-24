@@ -1,6 +1,6 @@
 {
   "name": "@codebit-labs/operacion-fuego-core",
-  "version": "0.0.2",
+  "version": "0.1.9",
   "main": "dist/main.js",
   "typings": "dist/core.d.ts",
   "license": "MIT",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:barrerajulio/operacion-fuego-quasar.git",
+    "url": "ssh://git@github.com:codebit-labs/operacion-fuego-quasar.git",
     "directory": "libraries/core"
   },
   "jest": {
@@ -39,5 +39,6 @@
       "tsx",
       "js"
     ]
-  }
+  },
+  "gitHead": "5510404c284472f69f839ca89dd95e003052ca70"
 }
