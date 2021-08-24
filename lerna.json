@@ -9,7 +9,7 @@
       "registry": "https://npm.pkg.github.com"
     },
     "version": {
-      "allowBranch": ["master"],
+      "allowBranch": ["master", "feature/fqd-13"],
       "message": "chore(release): publish %s"
     }
   }
