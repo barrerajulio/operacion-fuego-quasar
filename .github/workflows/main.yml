@@ -39,7 +39,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
       - name: deploy
         run: |
-          yarn deploy
+          lerna run deploy --scope=@codebit-labs/operacion-fuego-api --stream
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
