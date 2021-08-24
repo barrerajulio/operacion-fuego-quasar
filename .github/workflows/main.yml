@@ -36,7 +36,7 @@ jobs:
           lerna run build --scope=@codebit-labs/operacion-fuego-core --stream
           lerna run test
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: deploy
         run: |
           lerna run deploy --scope=@codebit-labs/operacion-fuego-api --stream
