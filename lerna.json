@@ -1,15 +1,21 @@
 {
   "individually": true,
   "npmClient": "yarn",
-  "packages": ["projects/*", "libraries/*"],
-  "version": "0.0.2",
+  "packages": [
+    "projects/*",
+    "libraries/*"
+  ],
+  "version": "0.1.0",
   "useWorkspaces": true,
   "command": {
     "publish": {
       "registry": "https://npm.pkg.github.com"
     },
     "version": {
-      "allowBranch": ["master", "feature/fqd-13"],
+      "allowBranch": [
+        "master",
+        "feature/fqd-13"
+      ],
       "message": "chore(release): publish %s"
     }
   }
