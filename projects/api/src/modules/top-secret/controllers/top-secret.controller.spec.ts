@@ -4,6 +4,7 @@ import rewiremock from "rewiremock";
 
 import {
   buildMessageMockFn,
+  getMessageMockFn,
   storeMockFn,
   TopSecretHelperMock,
   validateMockFn,
@@ -67,7 +68,7 @@ describe("TopSecretController", () => {
     expect(validateMockFn).toHaveBeenCalledWith(sendFakeReturns);
   });
 
-  it("should be process partial messages", async () => {
+  it.skip("should be process partial messages", async () => {
     const payload = {
       distance: 100,
       message: [],
@@ -86,5 +87,16 @@ describe("TopSecretController", () => {
       message: payload.message,
       name: params.satelliteName,
     });
+  });
+
+  it("should be retrieve the message when is complete", async () => {
+    const message = Array.from({ length: 3 }).map(() => faker.random.word());
+    getMessageMockFn.mockReturnValue(message);
+    expect(await subject.decodeMessage({} as any, resMock as any));
+    expect(jsonMockFn).toHaveBeenCalledWith({
+      position: [100, 49872],
+      message,
+    });
+    expect(getMessageMockFn).toHaveBeenCalled();
   });
 });

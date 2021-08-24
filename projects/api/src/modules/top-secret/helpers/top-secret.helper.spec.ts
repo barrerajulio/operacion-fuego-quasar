@@ -6,12 +6,22 @@ import {
   isUndefinedMockFn,
   ObjectHelperMock,
 } from "./__mocks__/object-helper.mock";
+import {
+  createMockFn,
+  findAllMockFn,
+  MessageRepositoryMock,
+} from "./__mocks__/message.repository.mock";
 import { TopSecretHelper } from "./top-secret.helper";
+import {
+  buildMessageMockFn,
+  validateMockFn,
+} from "../controllers/__mocks__/top-secret.helper.mock";
 
 describe("api.top-secret.helpers.TopSecretHelper", () => {
   let subject: Omit<TopSecretHelper, "objectHelper"> & {
     objectHelper: ObjectHelper;
     messageRepository: any;
+    transform: () => {};
     buildSatelliteMessage: (
       message: string[],
       incomingMessage: string[]
@@ -26,6 +36,7 @@ describe("api.top-secret.helpers.TopSecretHelper", () => {
   beforeAll(() => {
     subject = new TopSecretHelper() as any;
     subject.objectHelper = new ObjectHelperMock();
+    subject.messageRepository = new MessageRepositoryMock();
   });
 
   it("should be defined", () => {
@@ -137,14 +148,34 @@ describe("api.top-secret.helpers.TopSecretHelper", () => {
       message: Array.from({ length: 5 }).map(() => faker.lorem.word()),
       name: faker.name.jobTitle(),
     };
-    subject.messageRepository = {
-      create: jest.fn(),
-    };
     expect(await subject.store(payload)).toBeUndefined();
-    expect(subject.messageRepository.create).toHaveBeenCalledWith({
+    expect(createMockFn).toHaveBeenCalledWith({
       name: payload.name,
       distance: payload.distance,
       message: payload.message.join(","),
+    });
+  });
+
+  describe("should be retrieve the message", () => {
+    it("when is complete then returns the message", async () => {
+      const messageRows = Array.from({ length: 4 }).map(() => ({
+        name: faker.random.word(),
+        distance: faker.datatype.number(),
+        message: faker.random.word(),
+      }));
+      const spyTransform = jest.spyOn(subject, "transform");
+      const spyTransformFake: string[] = [];
+      const messageBuild = faker.random.words();
+      buildMessageMockFn.mockReturnValue(messageBuild);
+      subject.buildMessage = buildMessageMockFn;
+      subject.validate = validateMockFn;
+      spyTransform.mockReturnValue(spyTransformFake);
+      findAllMockFn.mockReturnValue(messageRows);
+      expect(await subject.getMessage()).toEqual(messageBuild);
+      expect(findAllMockFn).toHaveBeenCalled();
+      expect(spyTransform).toHaveBeenCalledWith(messageRows);
+      expect(buildMessageMockFn).toHaveBeenCalledWith(spyTransformFake);
+      expect(validateMockFn).toHaveBeenCalledWith(messageBuild);
     });
   });
 });

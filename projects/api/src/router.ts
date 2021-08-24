@@ -13,11 +13,12 @@ router.get("/", (_req: Request, res: Response) => {
   return res.json({ Hello: "World Team" });
 });
 
-router.post("/top_secret", controller.receiveMessage.bind(this));
+router.post("/top_secret", controller.receiveMessage.bind(controller));
 router.post(
   "/top_secret_split/:satelliteName",
-  controller.receivePartialMessage.bind(this)
+  controller.receivePartialMessage.bind(controller)
 );
+router.get("/top_secret_split", controller.decodeMessage.bind(controller));
 
 router.get("*", (_req, res): Response => {
   res.status(404);

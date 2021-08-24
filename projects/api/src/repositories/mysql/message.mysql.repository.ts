@@ -43,12 +43,16 @@ class MessageMysqlRepository implements IMessageRepository {
   private transform({
     id,
     uuid,
+    name,
     message,
+    distance,
   }: MessageSequelizeModel): IMessageModel {
     return {
       id,
       uuid,
+      name,
       message,
+      distance,
     };
   }
 }

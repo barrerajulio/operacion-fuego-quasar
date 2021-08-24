@@ -29,6 +29,7 @@ export class TopSecretController {
     });
   }
 
+  @errorHandler
   @httpStatus(HttpStatus.NO_CONTENT)
   @schemaValidate(receivePartialMessageSchema)
   public async receivePartialMessage(
@@ -43,5 +44,14 @@ export class TopSecretController {
       name: satelliteName,
     });
     return res.json();
+  }
+
+  @errorHandler
+  public async decodeMessage(_: Request, res: Response): Promise<Response> {
+    const message = await this.topSecretHelper.getMessage();
+    return res.json({
+      position: [100, 49872],
+      message,
+    });
   }
 }

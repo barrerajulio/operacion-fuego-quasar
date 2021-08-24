@@ -15,6 +15,8 @@ class MessageDummyRepository implements IMessageRepository {
     return {
       id: 1,
       uuid: "d52c4310-6ffb-4297-9da1-9f1bfdf06356",
+      name: "kenobi",
+      distance: 100,
       message: Array.from({ length: 3 })
         .map(() => "lorem")
         .join(","),
