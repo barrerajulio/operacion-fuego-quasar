@@ -1,6 +1,6 @@
 {
   "name": "@codebit-labs/operacion-fuego-core",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/main.js",
   "typings": "dist/core.d.ts",
   "license": "MIT",
@@ -40,5 +40,5 @@
       "js"
     ]
   },
-  "gitHead": "a01017e1c71ca1a690c87bec96fea9d9c2af4592"
+  "gitHead": "067f03e15d44be599ea0c2f3572210b619747545"
 }
