@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import faker from "faker";
 import { ObjectHelper } from "@codebit-labs/operacion-fuego-core";
 
 import {
@@ -10,6 +11,7 @@ import { TopSecretHelper } from "./top-secret.helper";
 describe("api.top-secret.helpers.TopSecretHelper", () => {
   let subject: Omit<TopSecretHelper, "objectHelper"> & {
     objectHelper: ObjectHelper;
+    messageRepository: any;
     buildSatelliteMessage: (
       message: string[],
       incomingMessage: string[]
@@ -126,6 +128,23 @@ describe("api.top-secret.helpers.TopSecretHelper", () => {
     it("when the message contains an empty item then is invalid and will throw an NotFoundException", () => {
       const message = ["message", "", "corrupt"];
       expect(() => subject.validate(message)).toThrow();
+    });
+  });
+
+  it("should be persist the message", async () => {
+    const payload: any = {
+      distance: faker.datatype.number(),
+      message: Array.from({ length: 5 }).map(() => faker.lorem.word()),
+      name: faker.name.jobTitle(),
+    };
+    subject.messageRepository = {
+      create: jest.fn(),
+    };
+    expect(await subject.store(payload)).toBeUndefined();
+    expect(subject.messageRepository.create).toHaveBeenCalledWith({
+      name: payload.name,
+      distance: payload.distance,
+      message: payload.message.join(","),
     });
   });
 });

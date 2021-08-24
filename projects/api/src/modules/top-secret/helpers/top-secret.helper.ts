@@ -5,12 +5,16 @@ import {
 } from "@codebit-labs/operacion-fuego-core";
 import { inject, injectable } from "inversify";
 
+import Symbols from "@app/repositories/symbols";
+import { IMessageRepository } from "@app/interfaces/message.repository";
 import { ISatellite } from "../interfaces/satellite";
 
 @injectable()
 export class TopSecretHelper {
   @inject(fireOperationCore.symbols.ObjectHelper)
   private objectHelper!: ObjectHelper;
+  @inject(Symbols.IMessageRepository)
+  private messageRepository!: IMessageRepository;
 
   public buildMessage(satellites: ISatellite[]): string[] {
     return this.getSatellitesMessage(satellites).reduce(
@@ -25,6 +29,14 @@ export class TopSecretHelper {
       throw new NotFoundException();
     }
     return true;
+  }
+
+  public async store({ message, name, distance }: ISatellite): Promise<void> {
+    await this.messageRepository.create({
+      name,
+      distance,
+      message: message.join(","),
+    });
   }
 
   private buildWordOnMessage(
