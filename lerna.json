@@ -5,7 +5,7 @@
     "projects/*",
     "libraries/*"
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "useWorkspaces": true,
   "command": {
     "publish": {

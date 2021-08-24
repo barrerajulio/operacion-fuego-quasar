@@ -1,6 +1,6 @@
 {
   "name": "@codebit-labs/operacion-fuego-events",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@codebit-labs/operacion-fuego-core": "^0.1.0",
+    "@codebit-labs/operacion-fuego-core": "^0.1.1",
     "express": "^4.17.1",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",
