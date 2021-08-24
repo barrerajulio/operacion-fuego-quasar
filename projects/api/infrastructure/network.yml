@@ -1,0 +1,9 @@
+Resources:
+  CLabsSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupName: PrivateCLabsSubnet
+      DBSubnetGroupDescription: PrivateCLabsSubnet
+      SubnetIds:
+        - subnet-c6520a8c
+        - subnet-fcec79a0

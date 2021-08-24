@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": "true",
   "scripts": {
-    "package": "sls package --stage development",
-    "deploy": "sls deploy --stage development",
+    "package": "sls package --stage dev",
+    "deploy": "sls deploy --stage dev",
     "start": "sls offline start",
     "test": "jest"
   },

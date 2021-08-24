@@ -1,0 +1,15 @@
+Resources:
+  Database:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      # Generate a name based on the stage
+      DBName: ${env:DATABASE_NAME, file(./.env.${self:provider.stage}.json):general.database.name}
+      AllocatedStorage: "20"
+      DBInstanceClass: db.t2.micro
+      Engine: mariadb
+      MasterUsername: ${env:DATABASE_USERNAME, file(./.env.${self:provider.stage}.json):general.database.username}
+      MasterUserPassword: ${env:DATABASE_PASSWORD, file(./.env.${self:provider.stage}.json):general.database.password}
+      DBSubnetGroupName:
+        Ref: CLabsSubnetGroup
+      PubliclyAccessible: true
+      project: codebit-labs

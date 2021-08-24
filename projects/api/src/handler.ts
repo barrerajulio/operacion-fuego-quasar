@@ -7,7 +7,7 @@ import "@app/app/container";
 import responseExceptionMiddleware from "./middlewares/response-exception";
 import { router } from "./router";
 
-export const hello = async (
+export const api = async (
   event: AWSLambda.APIGatewayProxyEvent,
   context: AWSLambda.Context
 ) => {

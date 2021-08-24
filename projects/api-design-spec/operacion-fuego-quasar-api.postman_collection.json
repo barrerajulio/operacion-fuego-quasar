@@ -1,0 +1,892 @@
+{
+	"info": {
+		"_postman_id": "2af5f866-827b-403b-96d7-464fa5a80026",
+		"name": "operacion-fuego-quasar/api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/auth/signin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Access-Control-Allow-Origin",
+								"value": "*\n"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"user@domain.com\",\n  \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/signin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						},
+						"description": "Identify an account, its a pre-action for execute differents auth requests with purpose to\nhave a user context\n"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Access-Control-Allow-Origin",
+										"value": "*\n"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"user@domain.com\",\n  \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/signin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								},
+								"description": "Identify an account, its a pre-action for execute differents auth requests with purpose to\nhave a user context\n"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"access_token\": \"eyJhbGciOiJ...sw5c\",\n  \"refresh_token\": \"eyJhbGciO...QdkawQwSCSsS_Feks\"\n}"
+						},
+						{
+							"name": "400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Access-Control-Allow-Origin",
+										"value": "*\n"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"user@domain.com\",\n  \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/signin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								},
+								"description": "Identify an account, its a pre-action for execute differents auth requests with purpose to\nhave a user context\n"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": {\n    \"code\": 4000,\n    \"message\": \"There are fields were invalid. Review and try again\",\n    \"type\": \"BadRequestException\",\n    \"fields\": [\n      {\n        \"name\": \"password\",\n        \"validations\": [\n          {\n            \"type\": \"any.required\",\n            \"message\": \"\\\"password\\\" is required\"\n          },\n          {\n            \"type\": \"any.required\",\n            \"message\": \"\\\"username\\\" is required\"\n          }\n        ]\n      }\n    ]\n  }\n}"
+						},
+						{
+							"name": "403",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Access-Control-Allow-Origin",
+										"value": "*\n"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"user@domain.com\",\n  \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/signin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								},
+								"description": "Identify an account, its a pre-action for execute differents auth requests with purpose to\nhave a user context\n"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": {\n    \"code\": 1001,\n    \"message\": \"username or password was invalid\",\n    \"type\": \"NotAuthorizedException\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "/auth/signout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/signout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signout"
+							]
+						},
+						"description": "Logout the current session to avoid something try of action with it\n"
+					},
+					"response": [
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/signout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signout"
+									]
+								},
+								"description": "Logout the current session to avoid something try of action with it\n"
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/signout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signout"
+									]
+								},
+								"description": "Logout the current session to avoid something try of action with it\n"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": {\n    \"code\": 4001,\n    \"message\": \"The token is required\",\n    \"type\": \"BadRequestException\"\n  }\n}"
+						},
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/signout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"signout"
+									]
+								},
+								"description": "Logout the current session to avoid something try of action with it\n"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"error\": {\n    \"code\": 4011,\n    \"message\": \"The current session was invalid\",\n    \"type\": \"UnauthorizedException\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "/auth/signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						},
+						"description": "Allow register a new account\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "oauth",
+			"item": [
+				{
+					"name": "verify",
+					"item": [
+						{
+							"name": "/oauth/verify",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"client_id\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"scope\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oauth/verify",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oauth",
+										"verify"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "204",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"client_id\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"scope\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/oauth/verify",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"oauth",
+												"verify"
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "302",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"client_id\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"scope\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/oauth/verify",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"oauth",
+												"verify"
+											]
+										}
+									},
+									"status": "Found",
+									"code": 302,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Location",
+											"value": "https://localhost:3000"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					],
+					"description": "- validate client configuration for check if the client was already auth with the same\nscopes\n- validate cliente configuration for verify the auth of app requester\n"
+				},
+				{
+					"name": "authorize",
+					"item": [
+						{
+							"name": "/oauth/authorize",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"client_id\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"scope\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oauth/authorize",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oauth",
+										"authorize"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "302",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"client_id\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"scope\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/oauth/authorize",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"oauth",
+												"authorize"
+											]
+										}
+									},
+									"status": "Found",
+									"code": 302,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					],
+					"description": "get the authorization to access the protected resource\n"
+				},
+				{
+					"name": "token",
+					"item": [
+						{
+							"name": "/oauth/token",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "<string>",
+										"description": "Base 64 encoded string that contains the client ID and client secret key.\nThe field must have the format: Authorization: Basic *<base64 encoded client_id:client_secret>*\n"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"grant_type\": \"<string>\",\n  \"code\": \"<string>\",\n  \"redirect_uri\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oauth/token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oauth",
+										"token"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "<string>",
+												"description": "Base 64 encoded string that contains the client ID and client secret key.\nThe field must have the format: Authorization: Basic *<base64 encoded client_id:client_secret>*\n"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"grant_type\": \"<string>\",\n  \"code\": \"<string>\",\n  \"redirect_uri\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/oauth/token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"oauth",
+												"token"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"access_token\": \"NgCXRK...MzYjw\",\n  \"token_type\": \"Bearer\",\n  \"scope\": \"user-read-private user-read-email\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"NgAagA...Um_SHo\"\n}"
+								}
+							]
+						}
+					],
+					"description": "- interchange an authorization code\n- refresh token\n"
+				}
+			]
+		},
+		{
+			"name": "topsecret",
+			"item": [
+				{
+					"name": "/topsecret",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"satellites\": [\n    {\n      \"name\": \"kenobi\",\n      \"distance\": 100,\n      \"message\": [\n        \"este\",\n        \"\",\n        \"\",\n        \"mensaje\",\n        \"\"\n      ]\n    },\n    {\n      \"name\": \"skywalker\",\n      \"distance\": 115.5,\n      \"message\": [\n        \"\",\n        \"es\",\n        \"\",\n        \"\",\n        \"secreto\",\n        \"\",\n        \"secreto\"\n      ]\n    },\n    {\n      \"name\": \"sato\",\n      \"distance\": 142.7,\n      \"message\": [\n        \"este\",\n        \"\",\n        \"un\",\n        \"\",\n        \"\",\n        \"muy\",\n        \"bueno\"\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/top_secret",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"top_secret"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"satellites\": [\n    {\n      \"name\": \"kenobi\",\n      \"distance\": 100,\n      \"message\": [\n        \"este\",\n        \"\",\n        \"\",\n        \"mensaje\",\n        \"\"\n      ]\n    },\n    {\n      \"name\": \"skywalker\",\n      \"distance\": 115.5,\n      \"message\": [\n        \"\",\n        \"es\",\n        \"\",\n        \"\",\n        \"secreto\"\n      ]\n    },\n    {\n      \"name\": \"sato\",\n      \"distance\": 142.7,\n      \"message\": [\n        \"este\",\n        \"\",\n        \"un\",\n        \"\",\n        \"\"\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/topsecret",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"topsecret"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"position\": {\n    \"x\": -100,\n    \"y\": 75.5\n  },\n  \"message\": \"este es un mensaje secreto\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Permite obtener la información de la nave\n"
+		},
+		{
+			"name": "topsecret_split/{satellite_name}",
+			"item": [
+				{
+					"name": "/topsecret_split/:satellite_name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"distance\": 100,\n  \"message\": [\n    \"este\",\n    \"\",\n    \"\",\n    \"mensaje\",\n    \"\"\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/topsecret_split/:satellite_name",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"topsecret_split",
+								":satellite_name"
+							],
+							"variable": [
+								{
+									"key": "satellite_name",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topsecret_split/:satellite_name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/topsecret_split/:satellite_name",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"topsecret_split",
+								":satellite_name"
+							],
+							"variable": [
+								{
+									"key": "satellite_name",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/topsecret_split/:satellite_name",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"topsecret_split",
+										":satellite_name"
+									],
+									"variable": [
+										{
+											"key": "satellite_name",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"position\": {\n    \"x\": \"-100.0\",\n    \"y\": \"75.5\"\n  },\n  \"message\": \"este es un mensaje secreto\",\n  \"status_code\": \"2000\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Base ping endpoint"
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Base ping endpoint"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"ping\": \"pong\"\n}"
+				}
+			]
+		},
+		{
+			"name": "/hello",
+			"request": {
+				"auth": {
+					"type": "oauth2"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/hello",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hello"
+					]
+				},
+				"description": "hello world"
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"auth": {
+							"type": "oauth2"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/hello",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hello"
+							]
+						},
+						"description": "hello world"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"hello\": \"username\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
