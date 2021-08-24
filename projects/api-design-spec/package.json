@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "Julio Barrera A.",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "start": "raml mock api.raml",
     "start:spec": "osprey -f  api.raml -p 4000 -a localhost:3000",
@@ -11,5 +12,6 @@
   },
   "devDependencies": {
     "osprey": "^1.0.0"
-  }
+  },
+  "gitHead": "a236f88648adaf8a8b92dd9d8c9b3d9c7c25168c"
 }
