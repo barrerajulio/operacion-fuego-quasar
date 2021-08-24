@@ -1,17 +1,26 @@
-import faker from "faker";
 import "reflect-metadata";
+import faker from "faker";
+import rewiremock from "rewiremock";
 
-import { TopSecretController } from "./top-secret.controller";
-import { TopSecretHelper } from "../helpers/top-secret.helper";
 import {
   buildMessageMockFn,
+  getMessageMockFn,
+  storeMockFn,
   TopSecretHelperMock,
   validateMockFn,
 } from "./__mocks__/top-secret.helper.mock";
+import { decoratorMock } from "./__mocks__/decorators.mock";
+import { jsonMockFn, resMock } from "./__mocks__/response.mock";
+rewiremock("@codebit-labs/operacion-fuego-core").with({
+  httpStatus: decoratorMock,
+});
+rewiremock.enable();
+import { TopSecretController } from "./top-secret.controller";
+rewiremock.disable();
 
 describe("TopSecretController", () => {
   let subject: Omit<TopSecretController, "topSecretHelper"> & {
-    topSecretHelper: TopSecretHelper;
+    topSecretHelper: any;
   };
 
   beforeAll(() => {
@@ -57,5 +66,37 @@ describe("TopSecretController", () => {
     expect(sendMockFn).toHaveBeenCalledWith({ message: sendFakeReturns });
     expect(buildMessageMockFn).toHaveBeenCalledWith(req.body.satellites);
     expect(validateMockFn).toHaveBeenCalledWith(sendFakeReturns);
+  });
+
+  it.skip("should be process partial messages", async () => {
+    const payload = {
+      distance: 100,
+      message: [],
+    };
+    const params = { satelliteName: faker.random.word() };
+    const jsonReturns = faker.lorem.paragraphs();
+    jsonMockFn.mockReturnValue(jsonReturns);
+    expect(
+      await subject.receivePartialMessage(
+        { body: payload, params } as any,
+        resMock as any
+      )
+    ).toEqual(jsonReturns);
+    expect(storeMockFn).toHaveBeenCalledWith({
+      distance: payload.distance,
+      message: payload.message,
+      name: params.satelliteName,
+    });
+  });
+
+  it("should be retrieve the message when is complete", async () => {
+    const message = Array.from({ length: 3 }).map(() => faker.random.word());
+    getMessageMockFn.mockReturnValue(message);
+    expect(await subject.decodeMessage({} as any, resMock as any));
+    expect(jsonMockFn).toHaveBeenCalledWith({
+      position: [100, 49872],
+      message,
+    });
+    expect(getMessageMockFn).toHaveBeenCalled();
   });
 });

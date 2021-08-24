@@ -40,9 +40,6 @@ package:
 functions:
   api:
     handler: src/handler.api
-    #    The following are a few example events you can configure
-    #    NOTE: Please make sure to change your handler code to work with those events
-    #    Check the event documentation for details
     events:
       - http:
           path: /
@@ -52,6 +49,16 @@ functions:
           path: /{proxy+}
           method: ANY
           cors: true
+    environment:
+      DATABASE_LOGGING: ${file(./.env.${self:provider.stage}.json):general.database.logging}
+      DATABASE_USERNAME: ${file(./.env.${self:provider.stage}.json):general.database.username}
+      DATABASE_PASSWORD: ${file(./.env.${self:provider.stage}.json):general.database.password}
+      DATABASE_HOST: ${file(./.env.${self:provider.stage}.json):general.database.host}
+      DATABASE_PORT: ${file(./.env.${self:provider.stage}.json):general.database.port}
+      DATABASE_NAME: ${file(./.env.${self:provider.stage}.json):general.database.name}
+      DATABASE_CONNECT_TIMEOUT: ${file(./.env.${self:provider.stage}.json):general.database.connectTimeout}
+      DATABASE_TIMEZONE: ${file(./.env.${self:provider.stage}.json):general.database.timezone}
+      DATABASE_PREFIX: ${file(./.env.${self:provider.stage}.json):general.database.prefix}
 resources:
   - ${file(./infrastructure/network.yml)}
   - ${file(./infrastructure/rds.yml)}

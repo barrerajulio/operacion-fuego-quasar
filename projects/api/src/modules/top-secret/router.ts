@@ -9,5 +9,6 @@ const controller = container.get<TopSecretController>(
 );
 const router = express.Router();
 router.post("/", controller.receiveMessage.bind(controller));
+router.post("/:satellite", controller.receivePartialMessage.bind(controller));
 
 export default router;

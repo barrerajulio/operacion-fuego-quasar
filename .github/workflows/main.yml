@@ -39,6 +39,9 @@ jobs:
           lerna run test
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: deploy
         run: |
           lerna run deploy --scope=@codebit-labs/operacion-fuego-api --stream
@@ -55,3 +58,5 @@ jobs:
           DATABASE_LOGGING: ${{ secrets.DATABASE_LOGGING }}
           MAX_ATTEMPTS_LOGIN: ${{ secrets.MAX_ATTEMPTS_LOGIN }}
           DATABASE_CONNECT_TIMEOUT: ${{ secrets.DATABASE_CONNECT_TIMEOUT }}
+    needs: [build]
+    if: github.ref == 'refs/heads/master'
