@@ -1,17 +1,20 @@
 {
   "name": "@codebit-labs/operacion-fuego-core",
-  "version": "0.0.2",
+  "version": "0.1.9",
   "main": "dist/main.js",
   "typings": "dist/core.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest"
   },
   "dependencies": {
     "inversify": "^5.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@types/faker": "^5.5.8",
+    "faker": "^5.5.3",
     "ts-loader": "^8.0.11"
   },
   "publishConfig": {
@@ -19,11 +22,23 @@
     "access": "restricted"
   },
   "peerDependencies": {
-    "inversify-binding-decorators": "^4.0.0"
+    "express": "^4.17.1"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:barrerajulio/operacion-fuego-quasar.git",
+    "url": "ssh://git@github.com:codebit-labs/operacion-fuego-quasar.git",
     "directory": "libraries/core"
-  }
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  },
+  "gitHead": "5510404c284472f69f839ca89dd95e003052ca70"
 }
