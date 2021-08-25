@@ -26,7 +26,7 @@ export class TopSecretHelper {
 
   public validate(message: string[]): true {
     const corruptMessage = message.find((word) => word === "");
-    if (corruptMessage !== undefined) {
+    if (message.length === 0 || corruptMessage !== undefined) {
       throw new NotFoundException();
     }
     return true;
