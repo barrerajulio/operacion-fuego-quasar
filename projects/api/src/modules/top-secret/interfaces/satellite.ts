@@ -3,3 +3,8 @@ export interface ISatellite {
   distance: number;
   message: string[];
 }
+
+export interface ILocation {
+  x: number;
+  y: number;
+}
