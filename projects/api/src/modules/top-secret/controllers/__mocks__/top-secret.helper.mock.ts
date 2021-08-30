@@ -6,5 +6,5 @@ export const TopSecretHelperMock = jest.fn().mockImplementation(() => ({
   buildMessage: buildMessageMockFn,
   validate: validateMockFn,
   store: storeMockFn,
-  getMessage: getMessageMockFn,
+  getMessageAndDistance: getMessageMockFn,
 }));

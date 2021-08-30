@@ -54,7 +54,10 @@ describe("TopSecretController", () => {
         ],
       },
     };
-    const sendFakeReturns = faker.random.words();
+    const sendFakeReturns = {
+      distance: faker.datatype.number(),
+      message: faker.random.words(),
+    };
     const sendMockFn = jest.fn();
     sendMockFn.mockReturnValue(sendFakeReturns);
     const res: any = {
@@ -63,9 +66,9 @@ describe("TopSecretController", () => {
     };
     buildMessageMockFn.mockReturnValue(sendFakeReturns);
     expect(await subject.receiveMessage(req, res)).toEqual(sendFakeReturns);
-    expect(sendMockFn).toHaveBeenCalledWith({ message: sendFakeReturns });
+    expect(sendMockFn).toHaveBeenCalledWith(sendFakeReturns);
     expect(buildMessageMockFn).toHaveBeenCalledWith(req.body.satellites);
-    expect(validateMockFn).toHaveBeenCalledWith(sendFakeReturns);
+    expect(validateMockFn).toHaveBeenCalledWith(sendFakeReturns.message);
   });
 
   it.skip("should be process partial messages", async () => {

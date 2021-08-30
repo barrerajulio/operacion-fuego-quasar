@@ -165,17 +165,27 @@ describe("api.top-secret.helpers.TopSecretHelper", () => {
       }));
       const spyTransform = jest.spyOn(subject, "transform");
       const spyTransformFake: string[] = [];
-      const messageBuild = faker.random.words();
+      const positionFake = {
+        x: faker.datatype.number(),
+        y: faker.datatype.number(),
+      };
+      const messageBuild = {
+        message: faker.random.words(),
+        distance: positionFake,
+      };
       buildMessageMockFn.mockReturnValue(messageBuild);
       subject.buildMessage = buildMessageMockFn;
       subject.validate = validateMockFn;
       spyTransform.mockReturnValue(spyTransformFake);
       findAllMockFn.mockReturnValue(messageRows);
-      expect(await subject.getMessage()).toEqual(messageBuild);
+      expect(await subject.getMessageAndDistance()).toEqual({
+        message: messageBuild.message,
+        distance: positionFake,
+      });
       expect(findAllMockFn).toHaveBeenCalled();
       expect(spyTransform).toHaveBeenCalledWith(messageRows);
       expect(buildMessageMockFn).toHaveBeenCalledWith(spyTransformFake);
-      expect(validateMockFn).toHaveBeenCalledWith(messageBuild);
+      expect(validateMockFn).toHaveBeenCalledWith(messageBuild.message);
     });
   });
 });

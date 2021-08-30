@@ -22,9 +22,10 @@ export class TopSecretController {
   @httpStatus(HttpStatus.CREATED)
   public async receiveMessage(req: Request, res: Response): Promise<Response> {
     const { satellites } = req.body;
-    const message = this.topSecretHelper.buildMessage(satellites);
+    const { distance, message } = this.topSecretHelper.buildMessage(satellites);
     this.topSecretHelper.validate(message);
     return res.send({
+      distance,
       message,
     });
   }
@@ -48,7 +49,7 @@ export class TopSecretController {
 
   @errorHandler
   public async decodeMessage(_: Request, res: Response): Promise<Response> {
-    const message = await this.topSecretHelper.getMessage();
+    const message = await this.topSecretHelper.getMessageAndDistance();
     return res.json({
       position: [100, 49872],
       message,
