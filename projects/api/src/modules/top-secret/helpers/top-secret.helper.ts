@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   fireOperationCore,
   NotFoundException,
   ObjectHelper,
@@ -6,9 +7,9 @@ import {
 import { inject, injectable } from "inversify";
 
 import Symbols from "@app/repositories/symbols";
+import { ILocation, ISatellite } from "../interfaces/satellite";
 import { IMessageModel } from "@app/interfaces/message";
 import { IMessageRepository } from "@app/interfaces/message.repository";
-import { ISatellite } from "../interfaces/satellite";
 
 @injectable()
 export class TopSecretHelper {
@@ -17,11 +18,18 @@ export class TopSecretHelper {
   @inject(Symbols.IMessageRepository)
   private messageRepository!: IMessageRepository;
 
-  public buildMessage(satellites: ISatellite[]): string[] {
-    return this.getSatellitesMessage(satellites).reduce(
+  public buildMessage(satellites: ISatellite[]): {
+    message: string[];
+    distance: { x: number; y: number };
+  } {
+    const message = this.getSatellitesMessage(satellites).reduce(
       this.buildSatelliteMessage.bind(this),
       []
     );
+    const distance = this.getLocation(
+      satellites.map((satellite) => satellite.distance)
+    );
+    return { message, distance };
   }
 
   public validate(message: string[]): true {
@@ -40,12 +48,37 @@ export class TopSecretHelper {
     });
   }
 
-  public async getMessage(): Promise<string[]> {
+  public async getMessageAndDistance(): Promise<{
+    distance: { x: number; y: number };
+    message: string[];
+  }> {
     const rows = await this.messageRepository.findAll();
     const satellites = this.transform(rows);
-    const message = this.buildMessage(satellites);
+    const { distance, message } = this.buildMessage(satellites);
     this.validate(message);
-    return message;
+    return { message, distance };
+  }
+
+  public getLocation(distances: number[]): ILocation {
+    return this.calcLocation(distances);
+  }
+
+  private calcLocation(distances: number[]): ILocation {
+    if (distances.length < 3) {
+      throw new BadRequestException(
+        "So sorry, we can't determine the location"
+      );
+    }
+    const [distance1, distance2, distance3, ...nextDistances] = distances;
+    const x = Math.atan2(Math.sqrt(distance1), Math.sqrt(distance2));
+    let y = Math.atan2(x, Math.sqrt(distance3));
+    return nextDistances.reduce<{ x: number; y: number }>(
+      (prev, current) => {
+        const y = Math.atan2(Math.sqrt(prev.x), Math.sqrt(current));
+        return { x: prev.x, y };
+      },
+      { x, y }
+    );
   }
 
   private buildWordOnMessage(
